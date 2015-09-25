@@ -39,7 +39,7 @@ public class Konsole {
             } 
             
             else {
-                System.err.println("Error: Command not found!");
+                System.err.println("Err: Command not found!");
             }
             
         }
