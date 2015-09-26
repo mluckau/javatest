@@ -6,6 +6,9 @@
 package org.mluckau.konsole;
 
 import java.util.Scanner;
+import org.mluckau.konsole.console.Console;
+import org.mluckau.konsole.console.commands.Echo;
+
 
 /**
  *
@@ -16,33 +19,33 @@ public class Konsole {
     /**
      * @param args the command line arguments
      */
+    public static final Console c = new Console();
+    
     public static void main(String[] args) {
-        final Scanner sc = new Scanner(System.in);
+        
+        final Scanner s = new Scanner(System.in);
+        
+        c.registerCommand(new Echo());
         
         while (true) {
+            System.out.print("# ");
             
-            String in = sc.nextLine();
-            String[] ain = in.split(" ");
-            String cmd = ain[0];
-            
-            if (cmd.equalsIgnoreCase("exit")){
-                System.exit(0);
-            } else if (cmd.equalsIgnoreCase("echo")){
-                if (ain.length > 1){
-                    for (int i = 1; i < ain.length; i++){
-                        System.out.print(ain[i] + " ");
-                    }
-                    System.out.println();
-                } else {
-                    System.err.println("Error: 'echo' needs 1 or more arguments.");
+            String in = s.nextLine();
+            if (in.isEmpty() == false) {
+                String[] scmd = in.split(" ");
+                String cmdname = scmd[0];
+                String[] cmdargs = new String[scmd.length - 1];
+                
+                for (int i = 1; i < scmd.length; i++) {
+                    cmdargs[i - 1] = scmd[i];
                 }
-            } 
-            
-            else {
-                System.err.println("Error: Command not found!");
+                
+                c.executeCommand(cmdname, cmdargs);
+            } else {
+                continue;
             }
-            
         }
+        
     }
     
 }
