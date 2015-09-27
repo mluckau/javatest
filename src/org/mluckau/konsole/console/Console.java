@@ -92,10 +92,11 @@ public class Console {
                 for (ConsoleListener listener : this.listeners){
                     listener.onCommand(cmd, cmdname, args);
                 }
-                
             } else {
                 writeError(String.format("Command not found: %s", cmdname));
             }
+        } else {
+            writeError(String.format("Command not found: %s", cmdname));
         }
     }
     

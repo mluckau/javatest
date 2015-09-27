@@ -17,14 +17,15 @@ import org.mluckau.konsole.console.commands.Echo;
  * @author michael
  */
 
-public class Konsole {
+public class Konsole implements Runnable {
 
     /**
      * @param args the command line arguments
      */
     public static final Console c = new Console();
     
-    public static void main(String[] args) {
+    @Override
+    public void run() {
         
         final Scanner s = new Scanner(System.in);
         
@@ -57,7 +58,6 @@ public class Konsole {
                 continue;
             }
         }
-        
     }
     
 }
