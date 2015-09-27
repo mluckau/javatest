@@ -7,6 +7,8 @@ package org.mluckau.konsole;
 
 import java.util.Scanner;
 import org.mluckau.konsole.console.Console;
+import org.mluckau.konsole.console.ConsoleCommand;
+import org.mluckau.konsole.console.ConsoleListener;
 import org.mluckau.konsole.console.commands.Echo;
 
 
@@ -14,6 +16,7 @@ import org.mluckau.konsole.console.commands.Echo;
  *
  * @author michael
  */
+
 public class Konsole {
 
     /**
@@ -26,6 +29,15 @@ public class Konsole {
         final Scanner s = new Scanner(System.in);
         
         c.registerCommand(new Echo());
+        
+        c.addListener(new ConsoleListener() {
+
+            @Override
+            public void onCommand(ConsoleCommand cmd, String cmdname, String[] args) {
+               Konsole.c.writeInfo("Command executed: " + cmdname);
+            }
+            
+        });
         
         while (true) {
             System.out.print("# ");

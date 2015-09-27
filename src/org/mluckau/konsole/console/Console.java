@@ -17,6 +17,7 @@ public class Console {
     public static final String ERROR_MSG = "[ERROR] ";
     
     private ArrayList<ConsoleCommand> commands = new ArrayList<ConsoleCommand>();
+    private ArrayList<ConsoleListener> listeners = new ArrayList<ConsoleListener>();
     
     
     public void writeLine(final String msg){
@@ -86,10 +87,27 @@ public class Console {
         if (isCommandRegistered(cmdname)){
             final ConsoleCommand cmd = getCommand(cmdname);
             if(cmd != null) {
+                
                 cmd.execute(args);
+                for (ConsoleListener listener : this.listeners){
+                    listener.onCommand(cmd, cmdname, args);
+                }
+                
             } else {
                 writeError(String.format("Command not found: %s", cmdname));
             }
+        }
+    }
+    
+    public void addListener(final ConsoleListener listener) {
+        if (listener != null) {
+            this.listeners.add(listener);
+        }
+    }
+    
+    public void removeListener(final ConsoleListener listener) {
+        if (listener != null) {
+            this.listeners.remove(listener);
         }
     }
     
